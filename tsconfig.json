@@ -5,10 +5,17 @@
     "moduleResolution": "bundler",
     "strict": true,
     "esModuleInterop": true,
-    "types": ["node"]
+    "types": ["node"],
+    "paths": {
+      "@pages/*": ["./pages/*"],
+      "@constants/*": ["./constants/*"],
+      "@fixtures/*": ["./fixtures/*"]
+    }
   },
   "include": [
     "tests/**/*.ts",
-    "playwright.config.ts"
+    "playwright.config.ts",
+    "pages/**/*.ts",
+    "constants/**/*.ts"
   ]
 }
