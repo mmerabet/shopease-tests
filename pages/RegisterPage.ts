@@ -16,9 +16,9 @@ export class RegisterPage {
         }
     }
 
-    async register(name: string, password: string) {
+    async register(name: string, email: string) {
         await this.page.locator('[data-qa="signup-name"]').fill(name);
-        await this.page.locator('[data-qa="signup-email"]').fill(password);
+        await this.page.locator('[data-qa="signup-email"]').fill(email);
         await this.page.locator('[data-qa="signup-button"]').click();
     }
 
