@@ -1,5 +1,5 @@
 import { Page } from '@playwright/test';
-import { MESSAGES } from '../constants/messages';
+import { MESSAGES } from '@constants/messages';
 
 export class LoginPage {
 
