@@ -30,23 +30,23 @@ test.describe('SHOP-5 - Inscription d\'un nouveau  client', () => {
         await expect(registerPage.getEmailExistsMessage()).toBeVisible();
     });
 
-    test.fixme('AC4 - Champs facultatifs', async ({ page }) => {
-        // Message de confirmation non disponible sur automationexercise.com - Sprint 1
+    test.fixme('AC4 - Message de confirmation après inscription', async ({ page }) => {
+        // Kevin n'a pas eu le temps de livrer cette feature - Sprint 1
         // Ticket Jira : SHOP-5 - commentaire du 23/04/2026
     });
 
-    test.fixme('AC5 - Champs facultatifs', async ({ page }) => {
-        // Email de confirmation non testable automatiquement sans accès boîte mail - Sprint 1
+    test.fixme('AC5 - Email de confirmation envoyé', async ({ page }) => {
+        // Kevin n'a pas eu le temps de livrer cette feature - Sprint 1
         // Ticket Jira : SHOP-5 - commentaire du 23/04/2026
     });
 
-    test.fixme('AC7 - Champs facultatifs', async ({ page }) => {
-        // Règles de complexité non présentes sur automationexercise.com - Sprint 1
+    test.fixme('AC7 - Règles de complexité du mot de passe', async ({ page }) => {
+        // Kevin n'a pas eu le temps de livrer cette feature - Sprint 1
         // Ticket Jira : SHOP-5 - commentaire du 23/04/2026
     });
 
-    test.fixme('AC8 - Champs facultatifs', async ({ page }) => {
-        // Champs facultatifs non présents sur automationexercise.com - Sprint 1
+    test.fixme('AC8 - Champs facultatifs adresse, ville, code postal', async ({ page }) => {
+        // Kevin n'a pas eu le temps de livrer cette feature - Sprint 1
         // Ticket Jira : SHOP-5 - commentaire du 23/04/2026
     });
 
