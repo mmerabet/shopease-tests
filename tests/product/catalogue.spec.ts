@@ -20,16 +20,12 @@ test.describe('SHOP-27 — Parcourir le catalogue produits', () => {
 
     test('Filtre sous-catégorie - Titre, URL et produits affichés', async ({ page }) => {
         await productListPage.expandCategory()
-
+        await productListPage.subcategoryLinks.first().waitFor({ state: 'visible' })
         const categoryName = await productListPage.subcategoryLinks.first().textContent()
-
         await productListPage.clickSubcategory()
-
         const title = await productListPage.getPageTitle()
         expect(title).toContain(categoryName?.trim() || '')
-
         await expect(page).toHaveURL(/category_products/)
-
         const productCount = await productListPage.getProductCount()
         expect(productCount).toBeGreaterThan(0)
     })
@@ -41,6 +37,7 @@ test.describe('SHOP-27 — Parcourir le catalogue produits', () => {
 
     test('Sous-catégorie - Produits correspondants affichés', async ({ page }) => {
         await productListPage.expandCategory()
+        await productListPage.subcategoryLinks.first().waitFor({ state: 'visible' })
         const subcategoryName = await productListPage.subcategoryLinks.first().textContent()
         await productListPage.clickSubcategory()
         const title = await productListPage.getPageTitle()

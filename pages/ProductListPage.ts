@@ -37,6 +37,7 @@ export class ProductListPage {
   }
 
   async clickSubcategory() {
+    await this.subcategoryLinks.first().waitFor({ state: 'visible' })
     await this.subcategoryLinks.first().click()
   }
   
