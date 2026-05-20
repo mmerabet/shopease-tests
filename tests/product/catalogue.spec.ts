@@ -5,6 +5,7 @@ test.describe('SHOP-27 — Parcourir le catalogue produits', () => {
     let productListPage: ProductListPage
 
     test.beforeEach(async ({ page }) => {
+        await page.route(/googlesyndication|doubleclick|googleadservices|googletagmanager/, route => route.abort())
         productListPage = new ProductListPage(page)
         await productListPage.navigate()
         const consentButton = page.getByRole('button', { name: /Consent|Autoriser/i })
@@ -20,7 +21,6 @@ test.describe('SHOP-27 — Parcourir le catalogue produits', () => {
 
     test('Filtre sous-catégorie - Titre, URL et produits affichés', async ({ page }) => {
         await productListPage.expandCategory()
-        await productListPage.subcategoryLinks.first().waitFor({ state: 'visible' })
         const categoryName = await productListPage.subcategoryLinks.first().textContent()
         await productListPage.clickSubcategory()
         const title = await productListPage.getPageTitle()
@@ -37,7 +37,6 @@ test.describe('SHOP-27 — Parcourir le catalogue produits', () => {
 
     test('Sous-catégorie - Produits correspondants affichés', async ({ page }) => {
         await productListPage.expandCategory()
-        await productListPage.subcategoryLinks.first().waitFor({ state: 'visible' })
         const subcategoryName = await productListPage.subcategoryLinks.first().textContent()
         await productListPage.clickSubcategory()
         const title = await productListPage.getPageTitle()
