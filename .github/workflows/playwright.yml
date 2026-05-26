@@ -2,6 +2,7 @@ name: Playwright Tests - Full Suite
 on:
   pull_request:
     branches: [ develop, main ]
+  workflow_dispatch:
 jobs:
   test:
     timeout-minutes: 60
