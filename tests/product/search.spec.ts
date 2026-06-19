@@ -14,26 +14,25 @@ test.describe('SHOP-28 — Recherche de produits', () => {
         }
     })
 
-    test('saisir un mot-clé et lancer la recherche', async ({ page }) => {
+    test('Recherche - Saisie mot-clé et lancement', async ({ page }) => {
         await searchPage.search('dress')
         const count = await searchPage.getProductCount()
         expect(count).toBeGreaterThan(0)
     })
 
-    test.skip('vérifier que les résultats contiennent le mot-clé', async ({ page }) => {
+    test.skip('Recherche - Résultats contiennent le mot-clé', async ({ page }) => {
         // AC2 supprimé — redondant avec AC1 après reformulation
         // Voir ticket de dette technique pour suppression dans Xray
     })
 
-    test('vérifier que la barre de recherche est visible', async ({ page }) => {
+    test('Recherche - Barre accessible depuis la page produits', async ({ page }) => {
         await expect(searchPage.searchInput).toBeVisible()
     })
 
-    test('lancer une recherche avec champ vide', async ({ page }) => {
+    test('Recherche - Champ vide affiche tous les produits', async ({ page }) => {
         await searchPage.search('')
         const count = await searchPage.getProductCount()
         expect(count).toBeGreaterThanOrEqual(20)
     })
-
 
 });
