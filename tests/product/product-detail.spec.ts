@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { ProductDetailPage } from '@pages/ProductDetailPage'
 
-test.describe('Product Detail Page', () => {
+test.describe('SHOP-29 — Consulter la fiche produit', () => {
     let productDetailPage: ProductDetailPage
 
     test.beforeEach(async ({ page }) => {
@@ -14,21 +14,20 @@ test.describe('Product Detail Page', () => {
         }
     })
 
-    test('La fiche produit affiche le nom, le prix et la catégorie du produit', async ({ page }) => {
+    test('Fiche produit - Nom, prix et catégorie affichés', async ({ page }) => {
         await expect(productDetailPage.productName).toBeVisible()
         await expect(productDetailPage.productPrice).toBeVisible()
         await expect(productDetailPage.productCategory).toBeVisible()
     })
 
-    test('Lorsque lutilisateur laisse un avis sur le produit, un message de confirmation apparaît', async ({ page }) => {
+    test('Fiche produit - Message confirmation après avis', async ({ page }) => {
         await productDetailPage.submitReview('Test User', 'test@example.com', 'This is a test review.')
         await expect(productDetailPage.reviewSuccessMessage).toBeVisible()
     })
 
-    test('La fiche produit affiche la disponibilité du produit', async ({ page }) => {
+    test('Fiche produit - Disponibilité In Stock affichée', async ({ page }) => {
         await expect(productDetailPage.availability).toBeVisible()
         await expect(productDetailPage.availability).toContainText('In Stock')
     })
-
 
 })

@@ -14,12 +14,12 @@ test.describe('SHOP-27 — Parcourir le catalogue produits', () => {
         }
     })
 
-    test('Au moins 20 produits affichés par défaut', async ({ page }) => {
+    test('Affichage par défaut - Au moins 20 produits affichés', async ({ page }) => {
         const productCount = await productListPage.getProductCount()
         expect(productCount).toBeGreaterThanOrEqual(20)
     })
 
-    test('Filtre sous-catégorie - Titre, URL et produits affichés', async ({ page }) => {
+    test('Filtre sous-catégorie - Titre, URL et produits', async ({ page }) => {
         await productListPage.expandCategory()
         const categoryName = await productListPage.subcategoryLinks.first().textContent()
         await productListPage.clickSubcategory()
