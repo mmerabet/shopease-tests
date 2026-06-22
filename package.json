@@ -9,8 +9,9 @@
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
-    "@playwright/test": "^1.59.1",
+    "@playwright/test": "^1.60.0",
     "@types/node": "^25.6.0",
+    "playwright": "^1.60.0",
     "tsconfig-paths": "^4.2.0"
   },
   "dependencies": {
