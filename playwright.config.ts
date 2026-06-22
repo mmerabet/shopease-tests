@@ -10,7 +10,10 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
-  reporter: 'html',
+  reporter: [
+    ['html'],
+    ['junit', { outputFile: 'results/junit-report.xml' }],
+  ],
   use: {
     baseURL: 'https://www.automationexercise.com',
     trace: 'on-first-retry',
