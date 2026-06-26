@@ -6,9 +6,13 @@ test.describe('SHOP-5 - Inscription d\'un nouveau  client', () => {
     let registerPage: RegisterPage;
 
     test.beforeEach(async ({ page }) => {
+        await page.route(/googlesyndication|doubleclick|googleadservices|googletagmanager/, route => route.abort())
         registerPage = new RegisterPage(page);
-        await registerPage.goto();
-        await registerPage.handleCookiesConsent();
+        await registerPage.navigate();
+        const consentButton = page.getByRole('button', { name: /Consent|Autoriser/i })
+        if (await consentButton.isVisible()) {
+            await consentButton.click()
+        }
     });
 
     test('AC1 - Formulaire accessible sur le site ', async ({ page }) => {
@@ -27,7 +31,7 @@ test.describe('SHOP-5 - Inscription d\'un nouveau  client', () => {
 
     test('AC6 - Email déjà existant', async ({ page }) => {
         await registerPage.register('John Doe', process.env.TEST_USER_EMAIL!);
-        await expect(registerPage.getEmailExistsMessage()).toBeVisible();
+        await expect(registerPage.emailExistsMessage).toBeVisible();
     });
 
     test.fixme('AC4 - Message de confirmation après inscription', async ({ page }) => {

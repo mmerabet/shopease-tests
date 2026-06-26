@@ -8,7 +8,7 @@ export default defineConfig({
   testDir: './tests',
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
+  retries: process.env.CI ? 2 : 1,
   workers: process.env.CI ? 1 : undefined,
   reporter: [
     ['html'],
@@ -30,7 +30,11 @@ export default defineConfig({
     },
     {
       name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
+      use: {
+        ...devices['Desktop Safari'],
+        // WebKit est plus lent sur le site externe — actionTimeout étendu pour éviter les faux positifs
+        actionTimeout: 45000,
+      },
     },
   ],
 });

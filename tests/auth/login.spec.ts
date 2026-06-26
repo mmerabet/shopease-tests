@@ -4,13 +4,16 @@ import { LoginPage } from '@pages/LoginPage';
 test.describe('SHOP-3 - Connexion avec email et mot de passe', () => {
 
     let loginPage: LoginPage;
-    
+
     test.beforeEach(async ({ page }) => {
-        await page.route(/googlesyndication|doubleclick|googleadservices|googletagmanager/, 
+        await page.route(/googlesyndication|doubleclick|googleadservices|googletagmanager/,
             route => route.abort())
         loginPage = new LoginPage(page);
-        await loginPage.goto();
-        await loginPage.handleCookiesConsent();
+        await loginPage.navigate();
+        const consentButton = page.getByRole('button', { name: /Consent|Autoriser/i })
+        if (await consentButton.isVisible()) {
+            await consentButton.click()
+        }
     });
 
     test('AC1 - Connexion réussie avec identifiants valides', async ({ page }) => {
@@ -21,19 +24,18 @@ test.describe('SHOP-3 - Connexion avec email et mot de passe', () => {
 
     test('AC2 - Connexion échouée avec mot de passe incorrect', async ({ page }) => {
         await loginPage.login(process.env.TEST_USER_EMAIL!, 'wrongpassword');
-        await expect(loginPage.getErrorMessage()).toBeVisible();
+        await expect(loginPage.errorMessage).toBeVisible();
         await expect(page.getByRole('link', { name: 'Signup / Login' })).toBeVisible();
     });
 
     test('AC3 - Connexion échouée avec email non enregistré', async ({ page }) => {
         await loginPage.login('nonexistent@exemple.com', process.env.TEST_USER_PASSWORD!);
-        await expect(loginPage.getErrorMessage()).toBeVisible();
+        await expect(loginPage.errorMessage).toBeVisible();
         await expect(page.getByRole('link', { name: 'Signup / Login' })).toBeVisible();
     });
 
     test('AC4 - La saisie du mot de passe est masquée', async ({ page }) => {
-        const passwordInput = loginPage.getPasswordInput();
-        await expect(passwordInput).toHaveAttribute('type', 'password');
+        await expect(loginPage.passwordInput).toHaveAttribute('type', 'password');
     });
 
     test.fixme('AC5 - Lien "Mot de passe oublié" visible', async ({ page }) => {
