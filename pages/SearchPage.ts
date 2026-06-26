@@ -1,19 +1,19 @@
 import { type Locator, type Page } from '@playwright/test'
+import { BasePage } from '@pages/BasePage'
 
 /**
  * Page de recherche — automationexercise.com/products
- * Couvre : saisie dans le champ de recherche, validation du résultat.
+ * Couvre : SHOP-28 (recherche de produits par mot-clé)
  * ⚠️ Pas de data-qa disponible — sélecteurs CSS en fallback.
  */
-export class SearchPage {
-    readonly page: Page
+export class SearchPage extends BasePage {
     readonly searchInput: Locator
     readonly searchIcon: Locator
     readonly productCards: Locator
     readonly productName: Locator
 
     constructor(page: Page) {
-        this.page = page
+        super(page)
         this.searchInput = page.getByRole('textbox', { name: 'Search Product' })
         this.searchIcon = page.locator('#submit_search')
         this.productCards = page.locator('div.single-products')

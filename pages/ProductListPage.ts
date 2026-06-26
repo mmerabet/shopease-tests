@@ -1,12 +1,12 @@
 import { type Locator, type Page } from '@playwright/test'
+import { BasePage } from '@pages/BasePage'
 
 /**
  * Page catalogue produits — automationexercise.com/products
- * Couvre : navigation par catégorie, filtre par marque, liste produits.
+ * Couvre : SHOP-27 (parcourir le catalogue, catégories, marques)
  * ⚠️ Pas de data-qa disponible — sélecteurs CSS en fallback.
  */
-export class ProductListPage {
-  readonly page: Page
+export class ProductListPage extends BasePage {
   readonly productCards: Locator
   readonly categoryParent: Locator
   readonly expandedCategory: Locator
@@ -15,7 +15,7 @@ export class ProductListPage {
   readonly pageTitle: Locator
 
   constructor(page: Page) {
-    this.page = page
+    super(page)
     this.productCards = page.locator('div.single-products')
     this.categoryParent = page.locator('a[data-toggle="collapse"]')
     this.expandedCategory = page.locator('div.panel-collapse.in')

@@ -1,4 +1,4 @@
-import { test } from '@playwright/test';
+import { test } from '@fixtures/index';
 
 test.describe('SHOP-7 - Galerie photo', () => {
 

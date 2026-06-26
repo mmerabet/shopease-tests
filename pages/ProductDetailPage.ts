@@ -1,12 +1,12 @@
 import { type Page, type Locator } from '@playwright/test'
+import { BasePage } from '@pages/BasePage'
 
 /**
- * Page detail produit — automationexercise.com/product_details/1
- * Couvre : consultation du nom, du prix, de la catégorie du produit et de la disponibilité. Ajout d'un avis et validation de son succès.
- * ⚠️ Pas de data-qa disponible — sélecteurs CSS en fallback.  
+ * Page détail produit — automationexercise.com/product_details/:id
+ * Couvre : SHOP-29 (nom, prix, catégorie, disponibilité, soumission d'avis)
+ * ⚠️ Pas de data-qa disponible — sélecteurs CSS en fallback.
  */
-export class ProductDetailPage {
-    readonly page: Page
+export class ProductDetailPage extends BasePage {
 
     readonly productName: Locator
     readonly productPrice: Locator
@@ -21,7 +21,7 @@ export class ProductDetailPage {
     readonly availability: Locator
 
     constructor(page: Page) {
-        this.page = page
+        super(page)
 
         this.productName = page.locator('div.product-information h2')
         this.productPrice = page.locator('div.product-information span span')

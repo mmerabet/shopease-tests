@@ -16,6 +16,7 @@
     "tests/**/*.ts",
     "playwright.config.ts",
     "pages/**/*.ts",
-    "constants/**/*.ts"
+    "constants/**/*.ts",
+    "fixtures/**/*.ts"
   ]
 }

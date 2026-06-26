@@ -1,33 +1,31 @@
-import { Page } from '@playwright/test';
+import { type Page, type Locator } from '@playwright/test';
 import { MESSAGES } from '@constants/messages';
+import { BasePage } from '@pages/BasePage';
 
-export class RegisterPage {
+/**
+ * Page d'inscription — automationexercise.com/login (formulaire signup)
+ * Couvre : SHOP-5 (inscription nouveau client)
+ * Sélecteurs : data-qa disponibles sur tous les éléments.
+ */
+export class RegisterPage extends BasePage {
 
-    constructor(private page: Page) { }
+    readonly successMessage: Locator;
+    readonly emailExistsMessage: Locator;
 
-    async goto() {
-        await this.page.goto('/login');
+    constructor(page: Page) {
+        super(page);
+        this.successMessage = this.page.getByText(MESSAGES.REGISTER_SUCCESS);
+        this.emailExistsMessage = this.page.getByText(MESSAGES.REGISTER_EMAIL_EXISTS);
     }
 
-    async handleCookiesConsent() {
-        const consentButton = this.page.getByRole('button', { name: 'Consent' });
-        if (await consentButton.isVisible()) {
-            await consentButton.click();
-        }
+    async navigate() {
+        await this.page.goto('/login');
     }
 
     async register(name: string, email: string) {
         await this.page.locator('[data-qa="signup-name"]').fill(name);
         await this.page.locator('[data-qa="signup-email"]').fill(email);
         await this.page.locator('[data-qa="signup-button"]').click();
-    }
-
-    getSuccessMessage() {
-        return this.page.getByText(MESSAGES.REGISTER_SUCCESS);
-    }
-
-    getEmailExistsMessage() {
-        return this.page.getByText(MESSAGES.REGISTER_EMAIL_EXISTS);
     }
 
 }

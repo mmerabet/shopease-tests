@@ -7,3 +7,12 @@ node_modules/
 /playwright/.cache/
 /playwright/.auth/
 .env
+
+# IDE
+.vscode/
+
+# Rapports de test générés
+/results/
+
+# Fichiers feature Gherkin (non intégrés)
+/features/

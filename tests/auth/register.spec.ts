@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '@fixtures/index';
 import { RegisterPage } from '@pages/RegisterPage';
 
 test.describe('SHOP-5 - Inscription d\'un nouveau  client', () => {
@@ -7,8 +7,7 @@ test.describe('SHOP-5 - Inscription d\'un nouveau  client', () => {
 
     test.beforeEach(async ({ page }) => {
         registerPage = new RegisterPage(page);
-        await registerPage.goto();
-        await registerPage.handleCookiesConsent();
+        await registerPage.navigate();
     });
 
     test('AC1 - Formulaire accessible sur le site ', async ({ page }) => {
@@ -25,9 +24,9 @@ test.describe('SHOP-5 - Inscription d\'un nouveau  client', () => {
         await expect(page.locator('[data-qa="signup-email"]')).toHaveJSProperty('validity.typeMismatch', true);
     });
 
-    test('AC6 - Email déjà existant', async ({ page }) => {
+    test('AC6 - Email déjà existant', async () => {
         await registerPage.register('John Doe', process.env.TEST_USER_EMAIL!);
-        await expect(registerPage.getEmailExistsMessage()).toBeVisible();
+        await expect(registerPage.emailExistsMessage).toBeVisible();
     });
 
     test.fixme('AC4 - Message de confirmation après inscription', async ({ page }) => {
