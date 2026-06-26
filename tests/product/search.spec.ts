@@ -1,17 +1,12 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '@fixtures/index';
 import { SearchPage } from '@pages/SearchPage';
 
 test.describe('SHOP-28 — Recherche de produits', () => {
     let searchPage: SearchPage;
 
     test.beforeEach(async ({ page }) => {
-        await page.route(/googlesyndication|doubleclick|googleadservices|googletagmanager/, route => route.abort())
         searchPage = new SearchPage(page)
         await searchPage.navigate()
-        const consentButton = page.getByRole('button', { name: /Consent|Autoriser/i })
-        if (await consentButton.isVisible()) {
-            await consentButton.click()
-        }
     })
 
     test('Recherche - Saisie mot-clé et lancement', async ({ page }) => {

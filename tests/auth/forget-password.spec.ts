@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '@fixtures/index';
 
 test.describe('SHOP-4 - Réinitialisation du mot de passe', () => {
 

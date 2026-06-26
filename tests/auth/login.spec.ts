@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '@fixtures/index';
 import { LoginPage } from '@pages/LoginPage';
 
 test.describe('SHOP-3 - Connexion avec email et mot de passe', () => {
@@ -6,14 +6,8 @@ test.describe('SHOP-3 - Connexion avec email et mot de passe', () => {
     let loginPage: LoginPage;
 
     test.beforeEach(async ({ page }) => {
-        await page.route(/googlesyndication|doubleclick|googleadservices|googletagmanager/,
-            route => route.abort())
         loginPage = new LoginPage(page);
         await loginPage.navigate();
-        const consentButton = page.getByRole('button', { name: /Consent|Autoriser/i })
-        if (await consentButton.isVisible()) {
-            await consentButton.click()
-        }
     });
 
     test('AC1 - Connexion réussie avec identifiants valides', async ({ page }) => {
@@ -34,11 +28,11 @@ test.describe('SHOP-3 - Connexion avec email et mot de passe', () => {
         await expect(page.getByRole('link', { name: 'Signup / Login' })).toBeVisible();
     });
 
-    test('AC4 - La saisie du mot de passe est masquée', async ({ page }) => {
+    test('AC4 - La saisie du mot de passe est masquée', async () => {
         await expect(loginPage.passwordInput).toHaveAttribute('type', 'password');
     });
 
-    test.fixme('AC5 - Lien "Mot de passe oublié" visible', async ({ page }) => {
+    test.fixme('AC5 - Lien "Mot de passe oublié" visible', async () => {
         // Kevin n'a pas eu le temps de livrer cette feature - Sprint 1
         // Ticket Jira : SHOP-3 - commentaire du 23/04/2026
     });

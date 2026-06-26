@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '@fixtures/index';
 import { RegisterPage } from '@pages/RegisterPage';
 
 test.describe('SHOP-5 - Inscription d\'un nouveau  client', () => {
@@ -6,13 +6,8 @@ test.describe('SHOP-5 - Inscription d\'un nouveau  client', () => {
     let registerPage: RegisterPage;
 
     test.beforeEach(async ({ page }) => {
-        await page.route(/googlesyndication|doubleclick|googleadservices|googletagmanager/, route => route.abort())
         registerPage = new RegisterPage(page);
         await registerPage.navigate();
-        const consentButton = page.getByRole('button', { name: /Consent|Autoriser/i })
-        if (await consentButton.isVisible()) {
-            await consentButton.click()
-        }
     });
 
     test('AC1 - Formulaire accessible sur le site ', async ({ page }) => {
@@ -29,7 +24,7 @@ test.describe('SHOP-5 - Inscription d\'un nouveau  client', () => {
         await expect(page.locator('[data-qa="signup-email"]')).toHaveJSProperty('validity.typeMismatch', true);
     });
 
-    test('AC6 - Email déjà existant', async ({ page }) => {
+    test('AC6 - Email déjà existant', async () => {
         await registerPage.register('John Doe', process.env.TEST_USER_EMAIL!);
         await expect(registerPage.emailExistsMessage).toBeVisible();
     });

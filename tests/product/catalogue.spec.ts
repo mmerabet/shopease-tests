@@ -1,17 +1,12 @@
-import { test, expect } from '@playwright/test'
+import { test, expect } from '@fixtures/index'
 import { ProductListPage } from '@pages/ProductListPage'
 
 test.describe('SHOP-27 — Parcourir le catalogue produits', () => {
     let productListPage: ProductListPage
 
     test.beforeEach(async ({ page }) => {
-        await page.route(/googlesyndication|doubleclick|googleadservices|googletagmanager/, route => route.abort())
         productListPage = new ProductListPage(page)
         await productListPage.navigate()
-        const consentButton = page.getByRole('button', { name: /Consent|Autoriser/i })
-        if (await consentButton.isVisible()) {
-            await consentButton.click()
-        }
     })
 
     test('Affichage par défaut - Au moins 20 produits affichés', async ({ page }) => {
