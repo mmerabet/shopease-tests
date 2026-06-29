@@ -1,4 +1,4 @@
-import { test, expect } from "@fixtures/index";
+import { expect, test } from "@fixtures/index";
 import { CartPage } from "@pages/CartPage";
 import { ProductDetailPage } from "@pages/ProductDetailPage";
 import { ProductListPage } from "@pages/ProductListPage";
@@ -43,6 +43,19 @@ test.describe('SHOP-104 - Gérer son panier', { tag: '@sprint3' }, () => {
         await expect(cartPage.productQuantity).toContainText('3')
     })
 
-    test("Remove product from cart removes it from the list", async ({ page }) => {})
+    test("Remove product from cart removes it from the list", async ({ page }) => {
+        const productListPage = new ProductListPage(page)
+        await productListPage.navigate()
+
+        const productName = await productListPage.addFirstProductToCart()
+        expect(productName).not.toBeNull()
+
+        await page.locator('#cartModal a[href="/view_cart"]').click()
+
+        await cartPage.removeProduct(productName!)
+        await expect(
+            page.locator('td.cart_description h4', { hasText: productName! })
+        ).not.toBeVisible()
+    })
 
 })
