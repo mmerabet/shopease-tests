@@ -11,13 +11,7 @@ export class ProductDetailPage extends BasePage {
     readonly productName: Locator
     readonly productPrice: Locator
     readonly productCategory: Locator
-
-    readonly reviewName: Locator
-    readonly reviewEmail: Locator
-    readonly reviewText: Locator
-    readonly reviewSubmitButton: Locator
     readonly reviewSuccessMessage: Locator
-
     readonly availability: Locator
 
     constructor(page: Page) {
@@ -26,20 +20,14 @@ export class ProductDetailPage extends BasePage {
         this.productName = page.locator('div.product-information h2')
         this.productPrice = page.locator('div.product-information span span')
         this.productCategory = page.locator('p').filter({ hasText: 'Category:' })
-
-        this.reviewName = page.getByPlaceholder('Your Name')
-        this.reviewEmail = page.locator('#review-form').getByPlaceholder('Email Address')
-        this.reviewText = page.getByPlaceholder('Add Review Here!')
-        this.reviewSubmitButton = page.getByRole('button', { name: 'Submit' })
         this.reviewSuccessMessage = page.getByText('Thank you for your review.')
-
         this.availability = page.locator('p').filter({ hasText: 'Availability:' })
     }
 
     async navigate() {
         await this.page.goto('/product_details/1')
     }
-    
+
     async getProductName() {
         return await this.productName.textContent()
     }
@@ -52,15 +40,23 @@ export class ProductDetailPage extends BasePage {
         return await this.productCategory.textContent()
     }
 
-    async submitReview(name: string, email: string, review: string) {
-        await this.reviewName.fill(name)
-        await this.reviewEmail.fill(email)
-        await this.reviewText.fill(review)
-        await this.reviewSubmitButton.click()
-    }
-
     async getAvailability() {
         return await this.availability.textContent()
+    }
+
+    async submitReview(name: string, email: string, review: string) {
+        await this.page.getByPlaceholder('Your Name').fill(name)
+        await this.page.locator('#review-form').getByPlaceholder('Email Address').fill(email)
+        await this.page.getByPlaceholder('Add Review Here!').fill(review)
+        await this.page.getByRole('button', { name: 'Submit' }).click()
+    }
+
+    async setQuantity(quantity: number) {
+        await this.page.locator('input#quantity').fill(quantity.toString())
+    }
+
+    async addToCart() {
+        await this.page.getByRole('button', { name: 'Add to cart' }).click()
     }
 
 }

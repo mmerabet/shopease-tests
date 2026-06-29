@@ -7,45 +7,44 @@ import { BasePage } from '@pages/BasePage'
  * ⚠️ Pas de data-qa disponible — sélecteurs CSS en fallback.
  */
 export class ProductListPage extends BasePage {
-  readonly productCards: Locator
-  readonly categoryParent: Locator
-  readonly expandedCategory: Locator
-  readonly subcategoryLinks: Locator
-  readonly brandLinks: Locator
-  readonly pageTitle: Locator
+    readonly expandedCategory: Locator
+    readonly subcategoryLinks: Locator
 
-  constructor(page: Page) {
-    super(page)
-    this.productCards = page.locator('div.single-products')
-    this.categoryParent = page.locator('a[data-toggle="collapse"]')
-    this.expandedCategory = page.locator('div.panel-collapse.in')
-    this.subcategoryLinks = page.locator('a[href^="/category_products/"]')
-    this.brandLinks = page.locator('div.brands-name a')
-    this.pageTitle = page.locator('h2.title.text-center')
-  }
+    constructor(page: Page) {
+        super(page)
+        this.expandedCategory = page.locator('div.panel-collapse.in')
+        this.subcategoryLinks = page.locator('a[href^="/category_products/"]')
+    }
 
-  async navigate() {
-    await this.page.goto('/products')
-  }
+    async navigate() {
+        await this.page.goto('/products')
+    }
 
-  async getProductCount() {
-    return await this.productCards.count()
-  }
+    async getProductCount() {
+        return await this.page.locator('div.single-products').count()
+    }
 
-  async expandCategory() {
-    await this.categoryParent.first().click()
-  }
+    async expandCategory() {
+        await this.page.locator('a[data-toggle="collapse"]').first().click()
+    }
 
-  async clickSubcategory() {
-    await this.subcategoryLinks.first().click()
-  }
+    async clickSubcategory() {
+        await this.subcategoryLinks.first().click()
+    }
 
-  async clickBrand() {
-    await this.brandLinks.first().click()
-  }
+    async clickBrand() {
+        await this.page.locator('div.brands-name a').first().click()
+    }
 
-  async getPageTitle() {
-    return await this.pageTitle.textContent()
-  }
+    async getPageTitle() {
+        return await this.page.locator('h2.title.text-center').textContent()
+    }
+
+    async addFirstProductToCart(): Promise<string> {
+        const firstCard = this.page.locator('div.single-products').first()
+        const productName = await firstCard.locator('div.productinfo p').textContent()
+        await firstCard.locator('div.productinfo a.add-to-cart').click()
+        return productName!
+    }
 
 }
