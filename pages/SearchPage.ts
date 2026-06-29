@@ -8,16 +8,10 @@ import { BasePage } from '@pages/BasePage'
  */
 export class SearchPage extends BasePage {
     readonly searchInput: Locator
-    readonly searchIcon: Locator
-    readonly productCards: Locator
-    readonly productName: Locator
 
     constructor(page: Page) {
         super(page)
         this.searchInput = page.getByRole('textbox', { name: 'Search Product' })
-        this.searchIcon = page.locator('#submit_search')
-        this.productCards = page.locator('div.single-products')
-        this.productName = page.locator('div.productinfo p')
     }
 
     async navigate() {
@@ -26,16 +20,15 @@ export class SearchPage extends BasePage {
 
     async search(keyword: string) {
         await this.searchInput.fill(keyword)
-        await this.searchIcon.click()
+        await this.page.locator('#submit_search').click()
     }
 
     async getProductCount() {
-        return await this.productCards.count()
+        return await this.page.locator('div.single-products').count()
     }
 
     async getProductNames() {
-        return await this.productName.allTextContents()
+        return await this.page.locator('div.productinfo p').allTextContents()
     }
-
 
 }
