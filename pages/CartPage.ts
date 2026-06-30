@@ -1,5 +1,5 @@
 import { type Page, type Locator } from '@playwright/test'
-import { BasePage } from './BasePage'
+import { BasePage } from '@pages/BasePage'
 
 /**
  * Page panier — automationexercise.com/view_cart
@@ -16,6 +16,10 @@ export class CartPage extends BasePage {
         this.productQuantity = this.page.locator('td.cart_quantity')
     }
 
+    async navigate() {
+        await this.page.goto('/view_cart')
+    }
+
     async removeProduct(productName: string) {
         await this.page
             .locator('tr', { hasText: productName })
@@ -23,7 +27,9 @@ export class CartPage extends BasePage {
             .click()
     }
 
-    async navigate() {
-        await this.page.goto('/view_cart')
+    async proceedToCheckout() {
+        await this.page.locator('a.check_out').click()
     }
+
+    
 }
