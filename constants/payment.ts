@@ -1,0 +1,7 @@
+export const PAYMENT_CONSTANTS = {
+    NAME_ON_CARD: 'John Doe',
+    CARD_NUMBER: '4111111111111111',
+    CVV: '123',
+    EXPIRATION_MONTH: '12',
+    EXPIRATION_YEAR: '2025'
+}

@@ -23,4 +23,9 @@ export class CheckoutPage extends BasePage {
         await this.page.goto('/checkout')
     }
 
+    async placeOrder() {
+        await this.page.locator('a[href="/payment"]').scrollIntoViewIfNeeded()
+        await this.page.locator('a[href="/payment"]').click()
+    }
+
 }
