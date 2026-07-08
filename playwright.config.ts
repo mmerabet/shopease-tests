@@ -21,6 +21,10 @@ export default defineConfig({
   },
   projects: [
     {
+      name: 'setup',
+      testMatch: /.*\.setup\.ts/,
+    },
+    {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
     },
@@ -35,6 +39,12 @@ export default defineConfig({
         // WebKit est plus lent sur le site externe — actionTimeout étendu pour éviter les faux positifs
         actionTimeout: 45000,
       },
+    },
+    {
+      name: 'authenticated',
+      use: { ...devices['Desktop Chrome'], storageState: 'tests/setup/auth.json' },
+      dependencies: ['setup'],
+      testMatch: '**/checkout.spec.ts',
     },
   ],
 });
